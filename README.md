@@ -7,6 +7,27 @@ $ aws iam attach-role-policy --role-name $ROLE_NAME \
 --policy-arn arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
 ```
 
+## Step 2: Prepare the DemonSet
+-  Create a folder and download the daemon
+```
+$ mkdir xray-daemon && cd xray-daemon
+$ curl https://s3.dualstack.ap-southeast-2.amazonaws.com/aws-xray-assets.ap-southeast-2/xray-daemon/aws-xray-daemon-linux-2.x.zip -o ./aws-xray-daemon-linux-2.x.zip
+$ unzip -o aws-xray-daemon-linux-2.x.zip -d .
+```
+- Create a Dockerfile with the following content.
+```
+FROM ubuntu:12.04
+COPY xray /usr/bin/xray-daemon
+CMD xray-daemon -f /var/log/xray-daemon.log &
+```
+-  Build the image and Push to new ECR with name: myproject-xray-daemon-ecr
+```
+$ $(aws ecr get-login --no-include-email --region ap-southeast-2)
+$ docker build -t bp-xray-daemon-ecr .
+$ docker tag myproject-xray-daemon-ecr:latest 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/myproject-xray-daemon-ecr:latest
+$ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/myproject-xray-daemon-ecr:latest
+```
+
 ## Step 2: Deploy X-Ray as a DaemonSet, Validate and View logs
 - Deploy the X-Ray DaemonSet
 ```
