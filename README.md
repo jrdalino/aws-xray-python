@@ -1,6 +1,6 @@
 # myproject-aws-xray-eks-python
 
-## Step 1: Modify IAM Role
+## Step 1: Add Policy to the Worker Node IAM Role
 - Using AWS CLI, add the following policy to the worker node's IAM role
 ```
 $ aws iam attach-role-policy --role-name $ROLE_NAME \
