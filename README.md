@@ -49,3 +49,4 @@ $ kubectl logs -l app=xray-daemon
 ## References
 - https://eksworkshop.com/intermediate/245_x-ray/x-ray-daemon/
 - https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html
+- https://aws.amazon.com/blogs/compute/application-tracing-on-kubernetes-with-aws-x-ray/
