@@ -33,12 +33,9 @@ $ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/myproject-xray-d
 ```
 $ kubectl create -f https://github.com/jrdalino/myproject-aws-xray-eks-python/blob/master/xray-k8s-daemonset.yaml
 ```
-- To see the status of the X-Ray DaemonSet
+- View status and logs for all the X-Ray demon pods
 ```
 $ kubectl describe daemonset xray-daemon
-```
-- View logs for all the X-Ray demon pods
-```
 $ kubectl logs -l app=xray-daemon
 ```
 
