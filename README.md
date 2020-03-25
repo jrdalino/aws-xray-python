@@ -8,6 +8,10 @@ $ aws iam attach-role-policy --role-name $ROLE_NAME \
 ```
 
 ## Step 2: Deploy X-Ray as a DaemonSet, Validate and View logs
+- Deploy the X-Ray DaemonSet
+```
+$ kubectl create -f https://github.com/jrdalino/myproject-aws-xray-eks-python/blob/master/xray-k8s-daemonset.yaml
+```
 - To see the status of the X-Ray DaemonSet
 ```
 $ kubectl describe daemonset xray-daemon
