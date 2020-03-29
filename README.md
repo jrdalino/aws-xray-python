@@ -40,8 +40,38 @@ $ kubectl logs -l app=xray-daemon
 ```
 
 ## Step 4: Instrument Front End React Application
+- Reference: https://docs.aws.amazon.com/xray/latest/devguide/scorekeep-client.html
 
 ## Step 5: Instrument Python Flask Application using X-Ray SDK for Python
+- Reference: https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-python-serverless.html
+- Install the following libraries
+```
+$ pip install aws-xray-sdk flask zappa requests
+```
+- import x-ray modules, patch the requests module, configure x-ray recorder, and insturment the flask app
+```
+# Import the X-Ray modules
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+from aws_xray_sdk.core import patcher, xray_recorder
+from flask import Flask
+import requests
+
+# Patch the requests module to enable automatic instrumentation
+patcher.patch(('requests',))
+
+app = Flask(__name__)
+
+# Configure the X-Ray recorder to generate segments with our service name
+xray_recorder.configure(service='My First Serverless App')
+
+# Instrument the Flask application
+XRayMiddleware(app, xray_recorder)
+ 
+@app.route('/')
+def hello_world():
+    resp = requests.get("https://aws.amazon.com")
+    return 'Hello, World: %s' % resp.url
+```
 
 ## Step 6: Deploy Application
 
