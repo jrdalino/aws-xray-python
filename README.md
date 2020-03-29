@@ -23,9 +23,9 @@ CMD xray-daemon -f /var/log/xray-daemon.log &
 -  Build the image and Push to new ECR with name: myproject-xray-daemon-ecr
 ```
 $ $(aws ecr get-login --no-include-email --region ap-southeast-2)
-$ docker build -t bp-xray-daemon-ecr .
-$ docker tag myproject-xray-daemon-ecr:latest 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/myproject-xray-daemon-ecr:latest
-$ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/myproject-xray-daemon-ecr:latest
+$ docker build -t xray .
+$ docker tag xray:latest 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray:latest
+$ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray:latest
 ```
 
 ## Step 3: Deploy X-Ray as a DaemonSet, Validate and View logs
