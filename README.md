@@ -144,8 +144,16 @@ References:
       }
 ```
 
-## Step 8: Cloudwatch Synthetics Integration
-- To follow
+## Step 8: Cloudwatch Synthetics
+- Create heartbeat monitoring on a single URL
+- Broken Link Checker
+- GUI Workflow
+- Monitor your API
+
+## Step 9: CloudWatch ServiceLens
+Unified access to metrics, logs, traces and canaries
+- Service Map: https://ap-southeast-2.console.aws.amazon.com/cloudwatch/home?region=ap-southeast-2#servicelens:map
+- Traces: https://ap-southeast-2.console.aws.amazon.com/cloudwatch/home?region=ap-southeast-2#servicelens:traces
 
 ## References
 - https://aws.amazon.com/blogs/compute/application-tracing-on-kubernetes-with-aws-x-ray/ 
