@@ -144,7 +144,7 @@ References:
       }
 ```
 
-## Step 8: Cloudwatch Synthetics
+## Step 8: CloudWatch Synthetics
 - Create heartbeat monitoring on a single URL
 - Broken Link Checker
 - GUI Workflow
