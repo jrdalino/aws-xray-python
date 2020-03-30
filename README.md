@@ -116,14 +116,36 @@ References:
 ## Step 6 : Enable Downstream Tracing for DynamoDB
 
 ## Step 7: App Mesh Integration
+- To configure the Envoy proxy to send data to X-Ray, set the ENABLE_ENVOY_XRAY_TRACING environment variable in its container definition.
+```
+{
+      "name": "envoy",
+      "image": "840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy:v1.12.1.1-prod",
+      "essential": true,
+      "environment": [
+        {
+          "name": "APPMESH_VIRTUAL_NODE_NAME",
+          "value": "mesh/myMesh/virtualNode/myNode"
+        },
+        {
+          "name": "ENABLE_ENVOY_XRAY_TRACING",
+          "value": "1"
+        }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -s http://localhost:9901/server_info | cut -d' ' -f3 | grep -q live"
+        ],
+        "startPeriod": 10,
+        "interval": 5,
+        "timeout": 2,
+        "retries": 3
+      }
+```
 
-## Step 8: CloudTrail Integration
-
-## Step 9: Cloudwatch Integration
-
-## Step 10: AWS Config Integration
-
-## Step 11: Elastic Load Balancer Integration
+## Step 8: Cloudwatch Synthetics Integration
+- To follow
 
 ## References
 - https://aws.amazon.com/blogs/compute/application-tracing-on-kubernetes-with-aws-x-ray/ 
