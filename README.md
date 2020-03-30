@@ -104,7 +104,7 @@ $ kubectl logs -l app=xray-daemon
 - View Traces > Trace Overview
 - View Traces > Trace Details
 
-## Step 5: Enable Upstream Rest API Gateway Tracining
+## Step 5: Enable Upstream Tracing for Rest API Gateway
 References:
 - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-xray.html
 - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enabling-xray.html
