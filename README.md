@@ -8,29 +8,37 @@ $ pip install aws-xray-sdk flask zappa requests
 - Add middleware to instrument incoming HTTP requests if using Flask
 - import x-ray modules, patch the requests module, configure x-ray recorder, and instrument the flask app
 ```
-# Import the X-Ray modules
+import os
+import config
+from flask import Flask, request
+from aws_xray_sdk.core import patch_all, xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
-from aws_xray_sdk.core import patcher, xray_recorder
-from flask import Flask
-import requests
-
-# Patch the requests module to enable automatic instrumentation
-patcher.patch(('requests',))
 
 app = Flask(__name__)
 
-# Configure the X-Ray recorder to generate segments with our service name
-xray_recorder.configure(service='My First Serverless App')
+xray_recorder.configure(
+    context_missing='LOG_ERROR',
+    service=config.XRAY_APP_NAME,
+)
 
-# Instrument the Flask application
+patch_all()
+
 XRayMiddleware(app, xray_recorder)
- 
+
+@app.route('/ping')
+def ping():
+    return 'Pong'
+
 @app.route('/')
-def hello_world():
-    resp = requests.get("https://aws.amazon.com")
-    return 'Hello, World: %s' % resp.url
+def color():
+    print('----------------')
+    print(request.headers)
+    print('----------------')
+    return config.COLOR
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=config.PORT, debug=config.DEBUG_MODE)
 ```
-- Reference: https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-python-serverless.html
 
 ## Step 2: Instrument front end application
 - Reference: https://docs.aws.amazon.com/xray/latest/devguide/scorekeep-client.html
@@ -58,11 +66,35 @@ option_settings:
 ### Lambda
 AWS Lambda automatically runs the X-Ray daemon when you enable tracing on your function.
 References:
+- https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-python-serverless.html
 - https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
 - https://docs.aws.amazon.com/lambda/latest/dg/using-x-ray.html
 - https://docs.aws.amazon.com/lambda/latest/dg/downstream-tracing.html
 - https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray-daemon.html
 - https://docs.aws.amazon.com/xray/latest/devguide/xray-services-lambda.html
+```
+# Import the X-Ray modules
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+from aws_xray_sdk.core import patcher, xray_recorder
+from flask import Flask
+import requests
+
+# Patch the requests module to enable automatic instrumentation
+patcher.patch(('requests',))
+
+app = Flask(__name__)
+
+# Configure the X-Ray recorder to generate segments with our service name
+xray_recorder.configure(service='My First Serverless App')
+
+# Instrument the Flask application
+XRayMiddleware(app, xray_recorder)
+ 
+@app.route('/')
+def hello_world():
+    resp = requests.get("https://aws.amazon.com")
+    return 'Hello, World: %s' % resp.url
+```
 
 ### Amazon ECS/EKS
 - Add Policy to the Worker Node IAM Role. Using AWS CLI, add the following policy to the worker node's IAM role
