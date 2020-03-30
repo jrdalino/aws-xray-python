@@ -105,8 +105,8 @@ $ aws iam attach-role-policy --role-name $ROLE_NAME \
 -  Create a folder and download the daemon
 ```
 $ mkdir xray-daemon && cd xray-daemon
-$ curl https://s3.dualstack.ap-southeast-2.amazonaws.com/aws-xray-assets.ap-southeast-2/xray-daemon/aws-xray-daemon-linux-2.x.zip -o ./aws-xray-daemon-linux-2.x.zip
-$ unzip -o aws-xray-daemon-linux-2.x.zip -d .
+$ curl https://s3.dualstack.ap-southeast-2.amazonaws.com/aws-xray-assets.ap-southeast-2/xray-daemon/aws-xray-daemon-linux-3.x.zip -o ./aws-xray-daemon-linux-3.x.zip
+$ unzip -o aws-xray-daemon-linux-3.x.zip -d .
 ```
 - Create a Dockerfile with the following content.
 ```
