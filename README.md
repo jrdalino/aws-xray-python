@@ -56,7 +56,8 @@ option_settings:
 ```
 
 ### Lambda
-- AWS Lambda automatically runs the X-Ray daemon when you enable tracing on your function.
+AWS Lambda automatically runs the X-Ray daemon when you enable tracing on your function.
+References:
 - https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
 - https://docs.aws.amazon.com/lambda/latest/dg/using-x-ray.html
 - https://docs.aws.amazon.com/lambda/latest/dg/downstream-tracing.html
@@ -104,6 +105,7 @@ $ kubectl logs -l app=xray-daemon
 - View Traces > Trace Details
 
 ## Step 5: Enable Upstream Rest API Gateway Tracining
+References:
 - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-xray.html
 - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enabling-xray.html
 - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-using-xray-maps.html
