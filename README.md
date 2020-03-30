@@ -3,7 +3,7 @@
 ## Step 1: Instrument and run your back end application (Python Flask)
 - Install the X-Ray SDK
 ```
-$ pip install aws-xray-sdk flask zappa requests
+$ pip install aws-xray-sdk flask requests
 ```
 - Add middleware to instrument incoming HTTP requests if using Flask
 - import x-ray modules, patch the requests module, configure x-ray recorder, and instrument the flask app
