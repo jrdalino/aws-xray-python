@@ -1,4 +1,4 @@
-# myproject-aws-xray-eks-python
+# aws-xray-python
 
 ## Step 1: Instrument and run your back end application (Python Flask)
 - Install the X-Ray SDK
