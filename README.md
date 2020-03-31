@@ -25,16 +25,9 @@ patch_all()
 
 XRayMiddleware(app, xray_recorder)
 
-@app.route('/ping')
+@app.route('/helloworld')
 def ping():
-    return 'Pong'
-
-@app.route('/')
-def color():
-    print('----------------')
-    print(request.headers)
-    print('----------------')
-    return config.COLOR
+    return 'Hello World'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=config.PORT, debug=config.DEBUG_MODE)
