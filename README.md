@@ -58,19 +58,53 @@ option_settings:
 
 ### Lambda
 AWS Lambda automatically runs the X-Ray daemon when you enable tracing on your function.
-References:
-- https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-python-serverless.html
-- https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
-- https://docs.aws.amazon.com/lambda/latest/dg/using-x-ray.html
-- https://docs.aws.amazon.com/lambda/latest/dg/downstream-tracing.html
-- https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray-daemon.html
-- https://docs.aws.amazon.com/xray/latest/devguide/xray-services-lambda.html
+- without flask
 ```
+import json
+import os
+import decimal
+import boto3
+
+# Import the X-Ray modules
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.core import patch_all
+
+# Patch all requests
+patch_all()
+
+# This is a workaround for: http://bugs.python.org/issue16535
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return int(obj)
+        return super(DecimalEncoder, self).default(obj)
+
+def lambda_handler(event, context):
+
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('todos')
+
+    # fetch all todos from the database
+    result = table.scan()
+
+    # create a response
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(result['Items'], cls=DecimalEncoder)
+    }
+
+    return response
+```
+
+
+- with flask
+```
+from flask import Flask
+import requests
+
 # Import the X-Ray modules
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 from aws_xray_sdk.core import patcher, xray_recorder
-from flask import Flask
-import requests
 
 # Patch the requests module to enable automatic instrumentation
 patcher.patch(('requests',))
