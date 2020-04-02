@@ -159,6 +159,7 @@ CMD ['']
 ```
 $ $(aws ecr get-login --no-include-email --region ap-southeast-2)
 $ docker build -t xray-daemon .
+$ aws ecr create-repository --repository-name xray-daemon
 $ docker tag xray-daemon:latest 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:latest
 $ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:latest
 ```
