@@ -141,7 +141,7 @@ $ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:late
 - Deploy X-Ray as a DaemonSet, Validate and View logs
 ```
 $ cd ~/environment/aws-xray-python/kubernetes/xray-k8s-daemonset.yaml
-$ kubectl create -f xray-k8s-daemonset.yaml
+$ kubectl apply -f xray-k8s-daemonset.yaml
 ```
 - View status and logs for all the X-Ray demon pods
 ```
