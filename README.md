@@ -129,12 +129,9 @@ def hello_world():
 $ aws iam attach-role-policy --role-name $ROLE_NAME \
 --policy-arn arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
 ```
--  Create a folder and download the daemon and create a Dockerfile as per https://github.com/jrdalino/aws-xray-python/blob/master/Dockerfile
+-  Create ECR Repo, build the image using https://github.com/jrdalino/aws-xray-python/blob/master/Dockerfile and push to ECR
 ```
-$ mkdir xray-daemon && cd xray-daemon
-```
--  Create ECR Repo, build the image and Push to ECR
-```
+$ cd ~/environment/aws-xray-python
 $ aws ecr create-repository --repository-name xray-daemon
 $ $(aws ecr get-login --no-include-email --region ap-southeast-2)
 $ docker build -t xray-daemon .
