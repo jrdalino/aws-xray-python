@@ -129,14 +129,12 @@ def hello_world():
 $ aws iam attach-role-policy --role-name $ROLE_NAME \
 --policy-arn arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
 ```
--  Create a folder and download the daemon
+-  Create a folder and download the daemon and create a Dockerfile
 ```
 $ mkdir xray-daemon && cd xray-daemon
-$ curl https://s3.dualstack.ap-southeast-2.amazonaws.com/aws-xray-assets.ap-southeast-2/xray-daemon/aws-xray-daemon-linux-3.x.zip -o ./aws-xray-daemon-linux-3.x.zip
-$ unzip -o aws-xray-daemon-linux-3.x.zip -d .
 ```
-- Create a Dockerfile with the following content.
 ```
+# Use Amazon Linux Version 1
 FROM amazonlinux:2
 
 # Download latest 3.x release of X-Ray daemon
@@ -148,6 +146,7 @@ RUN yum install -y unzip && \
     rm aws-xray-daemon-linux-3.x.zip && \
     rm cfg.yaml
 
+# Expose port 2000 on udp
 EXPOSE 2000/udp
 
 ENTRYPOINT ["/usr/bin/xray"]
@@ -155,11 +154,11 @@ ENTRYPOINT ["/usr/bin/xray"]
 # No cmd line parameters, use default configuration
 CMD ['']
 ```
--  Build the image and Push to new ECR with name: xray
+-  Create ECR Repo, build the image and Push to ECR
 ```
+$ aws ecr create-repository --repository-name xray-daemon
 $ $(aws ecr get-login --no-include-email --region ap-southeast-2)
 $ docker build -t xray-daemon .
-$ aws ecr create-repository --repository-name xray-daemon
 $ docker tag xray-daemon:latest 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:latest
 $ docker push 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:latest
 ```
