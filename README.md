@@ -11,18 +11,23 @@ $ pip install aws-xray-sdk flask requests
 import os
 import config
 from flask import Flask, request
+
+# Import X-Ray modules
 from aws_xray_sdk.core import patch_all, xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 app = Flask(__name__)
 
+# Configure a segment name on the xray_recorder
 xray_recorder.configure(
     context_missing='LOG_ERROR',
     service=config.XRAY_APP_NAME,
 )
 
+# Patch all supported libraries (Downstream)
 patch_all()
 
+# Use the XRayMiddleware function to patch your Flask application in code.
 XRayMiddleware(app, xray_recorder)
 
 @app.route('/helloworld')
