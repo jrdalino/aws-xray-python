@@ -148,6 +148,12 @@ $ kubectl apply -f xray-k8s-daemonset.yaml
 $ kubectl describe daemonset xray-daemon
 $ kubectl logs -l app=xray-daemon
 ```
+- Set up the deployment.yaml environment variable to connect to the X-Ray Daemon
+```
+env:
+- name: AWS_XRAY_DAEMON_ADDRESS 
+  value: xray-service.default
+```
 
 ## Step 4: Deploy and Test Application, Examine and Traces X-Ray Console
 - View Service Map
