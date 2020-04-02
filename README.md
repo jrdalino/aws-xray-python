@@ -16,18 +16,18 @@ from flask import Flask, request
 from aws_xray_sdk.core import patch_all, xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
+# Patch all supported libraries to enable automatic downstream instrumentation
+patch_all()
+
 app = Flask(__name__)
 
-# Configure a segment name on the xray_recorder
+# Configure the X-Ray recorder to generate segments with our service name
 xray_recorder.configure(
     context_missing='LOG_ERROR',
     service=config.XRAY_APP_NAME,
 )
 
-# Patch all supported libraries (Downstream)
-patch_all()
-
-# Use the XRayMiddleware function to patch your Flask application in code.
+# Instrument the Flask application
 XRayMiddleware(app, xray_recorder)
 
 @app.route('/helloworld')
