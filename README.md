@@ -10,7 +10,7 @@ $ pip install aws-xray-sdk
 ```
 import os
 import config
-from flask import Flask, request
+from flask import Flask
 
 # Import the X-Ray modules
 from aws_xray_sdk.core import xray_recorder, patch_all
