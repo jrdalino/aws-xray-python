@@ -188,3 +188,4 @@ Unified access to metrics, logs, traces and canaries
 - https://github.com/aws-samples/reinvent2018-dev303-code
 - https://github.com/GoogleCloudPlatform/microservices-demo
 - https://github.com/pksinghus/xray-python-k8s
+- https://www.slideshare.net/AmazonWebServices/instrumenting-kubernetes-for-observability-using-aws-xray-and-amazon-cloudwatch-dev303r2-aws-reinvent-2018
