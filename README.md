@@ -3,7 +3,7 @@
 ## Step 1: Instrument and run your back end application (Python Flask)
 - Install the X-Ray SDK
 ```
-$ pip install aws-xray-sdk flask requests
+$ pip install aws-xray-sdk
 ```
 - Add middleware to instrument incoming HTTP requests if using Flask
 - import x-ray modules, patch the requests module, configure x-ray recorder, and instrument the flask app
@@ -12,23 +12,18 @@ import os
 import config
 from flask import Flask, request
 
-# Import X-Ray modules
-from aws_xray_sdk.core import patch_all, xray_recorder
+# Import the X-Ray modules
+from aws_xray_sdk.core import xray_recorder, patch_all
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
-
-# Patch all supported libraries to enable automatic downstream instrumentation
-patch_all()
 
 app = Flask(__name__)
 
-# Configure the X-Ray recorder to generate segments with our service name
-xray_recorder.configure(
-    context_missing='LOG_ERROR',
-    service=config.XRAY_APP_NAME,
-)
-
-# Instrument the Flask application
+# AWS X-Ray
+plugins = ('EC2Plugin', 'ECSPlugin')
+xray_recorder.configure(service='myproject-customer-service',plugins=plugins)
 XRayMiddleware(app, xray_recorder)
+	
+patch_all()
 
 @app.route('/helloworld')
 def ping():
