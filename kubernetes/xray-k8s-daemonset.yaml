@@ -56,7 +56,7 @@ spec:
       hostNetwork: true
       containers:
         - name: xray-daemon
-          image: 222337787619.dkr.ecr.ap-southeast-2.amazonaws.com/xray-daemon:latest
+          image: 707538076348.dkr.ecr.ap-southeast-1.amazonaws.com/xray-daemon:latest
           command: ["/usr/bin/xray", "-c", "/aws/xray/config.yaml"]
           resources:
             requests:
