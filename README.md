@@ -106,8 +106,8 @@ $ cd ~/environment/aws-xray-python
 $ aws ecr create-repository --repository-name xray-daemon
 $ aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 707538076348.dkr.ecr.ap-southeast-1.amazonaws.com
 $ docker build -t xray-daemon .
-$ docker tag xray-daemon:latest 222337787619.dkr.ecr.ap-southeast-1.amazonaws.com/xray-daemon:latest
-$ docker push 222337787619.dkr.ecr.ap-southeast-1.amazonaws.com/xray-daemon:latest
+$ docker tag xray-daemon:latest 707538076348.dkr.ecr.ap-southeast-1.amazonaws.com/xray-daemon:latest
+$ docker push 707538076348.dkr.ecr.ap-southeast-1.amazonaws.com/xray-daemon:latest
 ```
 - Deploy X-Ray as a DaemonSet, Validate and View logs
 ```
